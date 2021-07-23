@@ -17,7 +17,7 @@ const formatCandlestick = array => array.map((e, i, a) => ({
   close: divide(propOr(prop('VALUE', e), 'VALUE', a[i+1]), 1000)
 }));
 
-export const CandlestickDeathsTable = ({ deaths }) => !deaths ? null : (
+export const CandlestickDeathsTable = ({ xAxis, deaths }) => !deaths ? null : (
   <VictoryChart
     scale={{ x: "time" }}
     domainPadding={{ x: 25 }}
@@ -33,7 +33,7 @@ export const CandlestickDeathsTable = ({ deaths }) => !deaths ? null : (
       label="Total Deaths (in Thousands)"
       dependentAxis
       fixLabelOverlap
-      tickValues={[150, 200, 250, 300, 325]}
+      tickValues={xAxis}
       axisLabelComponent={<VictoryLabel dy={-30}/>}
     />
     <VictoryCandlestick
