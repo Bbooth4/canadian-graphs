@@ -27,8 +27,10 @@ export const App = () => {
         Canadian Deaths 1971 - 2020
       </header>
       <CandlestickGraph
+        type="deaths"
         data={deaths}
         xAxis={[150, 200, 250, 300, 325]}
+        xAxisLabel="Total Deaths (in Thousands)"
       />
 
       <header className="header">
@@ -40,8 +42,10 @@ export const App = () => {
         Canadian Population 1971 - 2020
       </header>
       <CandlestickGraph
+        type="population"
         data={population}
-        xAxis={[150, 200, 250, 300, 325]}
+        xAxisValues={[20, 25, 30, 35, 40]}
+        xAxisLabel="Total Population (in Millions)"
       />
     </div>
   );
