@@ -1,25 +1,56 @@
-import logo from './logo.svg';
 import './App.css';
+import { useAsync } from "react-async";
+import { LineDeathsTable, CandlestickTableDeaths } from './tables';
 
-function App() {
+const getDeaths = async () => {
+  try {
+    const res = await fetch('http://localhost:3001/deaths',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+const getPop = async () => {
+  try {
+    const res = await fetch('http://localhost:3001/population',
+      {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }
+    )
+    return await res.json();
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const App = () => {
+  const { data: deaths } = useAsync({ promiseFn: getDeaths });
+  const { data: population } = useAsync({ promiseFn: getPop });
+  console.log({population});
+  deaths && console.log(deaths[deaths.length - 1]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        Canadian Deaths 1971 - 2020
       </header>
+      <CandlestickTableDeaths deaths={deaths} />
+
+      <header className="header">
+        Canadian Deaths Change Per Year 1971 - 2020
+      </header>
+      <LineDeathsTable deaths={deaths} />
     </div>
   );
-}
+};
 
 export default App;
