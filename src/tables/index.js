@@ -1,2 +1,2 @@
-export { default as LineDeathsTable } from './line-deaths';
-export { default as CandlestickTableDeaths } from './candlestick-deaths';
+export { default as LineGraph } from './line-graph';
+export { default as CandlestickGraph } from './candlestick-graph';

@@ -1,6 +1,6 @@
 import './App.css';
 import { useAsync } from "react-async";
-import { LineDeathsTable, CandlestickTableDeaths } from './tables';
+import { LineGraph, CandlestickGraph } from './tables';
 
 const getData = async ({ csv }) => {
   try {
@@ -26,15 +26,23 @@ export const App = () => {
       <header className="header">
         Canadian Deaths 1971 - 2020
       </header>
-      <CandlestickTableDeaths
-        deaths={deaths}
+      <CandlestickGraph
+        data={deaths}
         xAxis={[150, 200, 250, 300, 325]}
       />
 
       <header className="header">
         Canadian Deaths Change Per Year 1971 - 2020
       </header>
-      <LineDeathsTable deaths={deaths} />
+      <LineGraph data={deaths} />
+
+      <header className="header">
+        Canadian Population 1971 - 2020
+      </header>
+      <CandlestickGraph
+        data={population}
+        xAxis={[150, 200, 250, 300, 325]}
+      />
     </div>
   );
 };

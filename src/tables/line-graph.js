@@ -16,8 +16,8 @@ const formatLine = array => {
   return remove(array.length - 1, 1, arr);
 };
 
-export const LineDeathsTable = ({ deaths }) => {
-  const formattedData = deaths ? formatLine(deaths) : null;
+export const LineGraph = ({ data }) => {
+  const formattedData = data ? formatLine(data) : null;
   return !formattedData ? null : (
     <VictoryChart
       scale={{ x: "time" }}
@@ -47,4 +47,4 @@ export const LineDeathsTable = ({ deaths }) => {
   );
 };
 
-export default LineDeathsTable;
+export default LineGraph;
