@@ -1,6 +1,7 @@
 import './App.css';
 import { useAsync } from "react-async";
 import { LineGraph, CandlestickGraph } from './tables';
+import { or, not } from 'ramda';
 
 const getData = async ({ csv }) => {
   try {
@@ -21,15 +22,18 @@ export const App = () => {
   const { data: deaths } = useAsync({ promiseFn: getData, csv: 'deaths' });
   const { data: population } = useAsync({ promiseFn: getData, csv: 'population' });
 
+  const renderRelative = or(not(deaths), not(population));
+
   return (
-    <div className="App">
+    <div className="app">
       <header className="header">
         Canadian Deaths 1971 - 2020
       </header>
       <CandlestickGraph
         type="deaths"
         data={deaths}
-        xAxis={[150, 200, 250, 300, 325]}
+        render={!deaths}
+        xAxisValues={[150, 200, 250, 300, 325]}
         xAxisLabel="Total Deaths (in Thousands)"
       />
 
@@ -44,9 +48,22 @@ export const App = () => {
       <CandlestickGraph
         type="population"
         data={population}
+        render={!population}
         xAxisValues={[20, 25, 30, 35, 40]}
         xAxisLabel="Total Population (in Millions)"
       />
+
+      <header className="header">
+        Canadian Deaths Relative to Population 1971 - 2020
+      </header>
+      {!renderRelative && (
+        <CandlestickGraph
+          type="relative"
+          data={{ deaths, population }}
+          xAxisValues={[.6, .7, .8]}
+          xAxisLabel="Realtive Deaths to Population (%)"
+        />
+      )}
     </div>
   );
 };
