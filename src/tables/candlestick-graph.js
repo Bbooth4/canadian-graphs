@@ -40,29 +40,29 @@ const formatPopulation = compose(
 );
 
 const formatRelative = ({ deaths, population }) => compose(
-    arr => arr.map((e, i, a) => ({
-      y: 'y',
-      x: match(isDate, e.REF_DATE),
-      low: multiply(100, divide(
-        setLow(deaths[i], deaths[i+1]),
-        setLow(e, a[i+1])
-      )),
-      high: multiply(100, divide(
-        setHigh(deaths[i], deaths[i+1]),
-        setHigh(e, a[i+1])
-      )),
-      open: multiply(100, divide(
-        prop('VALUE', deaths[i]),
-        prop('VALUE', e)
-      )),
-      close: multiply(100, divide(
-        propOr(prop('VALUE', deaths[i]), 'VALUE', deaths[i+1]),
-        propOr(prop('VALUE', e), 'VALUE', a[i+1])
-      ))
-    })),
-    remove(0, 1),
-    filterWholePop
-  )(population);
+  arr => arr.map((e, i, a) => ({
+    y: 'y',
+    x: match(isDate, e.REF_DATE),
+    low: multiply(100, divide(
+      setLow(deaths[i], deaths[i+1]),
+      setLow(e, a[i+1])
+    )),
+    high: multiply(100, divide(
+      setHigh(deaths[i], deaths[i+1]),
+      setHigh(e, a[i+1])
+    )),
+    open: multiply(100, divide(
+      prop('VALUE', deaths[i]),
+      prop('VALUE', e)
+    )),
+    close: multiply(100, divide(
+      propOr(prop('VALUE', deaths[i]), 'VALUE', deaths[i+1]),
+      propOr(prop('VALUE', e), 'VALUE', a[i+1])
+    ))
+  })),
+  remove(0, 1),
+  filterWholePop
+)(population);
 
 const formatData = (type, data) => {
   switch(type) {
@@ -74,8 +74,8 @@ const formatData = (type, data) => {
       return formatPopulation(data);
     default:
       return [];
-  }
-}
+  };
+};
 
 export const CandlestickGraph = ({ data, type, render, xAxisValues, xAxisLabel }) => render ? null : (
   <VictoryChart
