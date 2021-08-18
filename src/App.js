@@ -21,24 +21,51 @@ const getData = async ({ csv }) => {
 
 // source
 // https://covid-19.ontario.ca/data
+// Aug 17, 2021
 const covidDeaths = [
-  { x: '< 20', y: 4/100 },
-  { x: '20-29', y: 26/100 },
-  { x: '30-39', y: 60/100 },
-  { x: '40-49', y: 144/100 },
-  { x: '50-59', y: 462/100 },
-  { x: '60-69', y: 1084/100 },
-  { x: '70-79', y: 1916/100 },
-  { x: '80-89', y: 3177/100 },
-  { x: '90+', y: 2473/100 }
+  { x: '< 20', y: 5/100 },
+  { x: '20-29', y: 28/100 },
+  { x: '30-39', y: 62/100 },
+  { x: '40-49', y: 149/100 },
+  { x: '50-59', y: 468/100 },
+  { x: '60-69', y: 1105/100 },
+  { x: '70-79', y: 1941/100 },
+  { x: '80-89', y: 3191/100 },
+  { x: '90+', y: 2478/100 }
 ];
 
 const covidDeaths80VNot80 = [
-  { x: '< 80', y: 4+26+60+144+462+1084+1916 },
-  { x: '>= 80', y: 3177+2473 }
+  { x: '< 80', y: 4+28+62+149+468+1105+1941 },
+  { x: '>= 80', y: 3191+2478 }
+];
+
+const ontarioCovidData = [
+  { x: '< 20', cases: 90493, deaths: 5 },
+  { x: '20-29', cases: 118215, deaths: 28 },
+  { x: '30-39', cases: 90904, deaths: 62 },
+  { x: '40-49', cases: 79635, deaths: 149 },
+  { x: '50-59', cases: 78389, deaths: 468 },
+  { x: '60-69', cases: 49020, deaths: 1105 },
+  { x: '70-79', cases: 24392, deaths: 1941 },
+  { x: '80-89', cases: 16628, deaths: 3191 },
+  { x: '90+', cases: 8660, deaths: 2478 }
+];
+
+const ontarioCovidData80VNot80 = [
+  {
+    x: '< 80',
+    deaths: 4+28+62+149+468+1105+1941,
+    cases: 90493+118215+90904+79635+78389+49020+24392
+  },
+  {
+    x: '>= 80',
+    deaths: 3177+2473,
+    cases: 16628+8660
+  }
 ];
 
 export const App = () => {
+  console.log(ontarioCovidData80VNot80)
   const { data: deaths } = useAsync({ promiseFn: getData, csv: 'deaths' });
   const { data: population } = useAsync({ promiseFn: getData, csv: 'population' });
 
@@ -46,31 +73,6 @@ export const App = () => {
 
   return (
     <div className="app">
-      <header className="header">
-        Ontario COVID Deaths Jan 2020 - Aug 2021
-      </header>
-      <BarGraph
-        data={covidDeaths}
-        xAxisLabel="Ages"
-        xAxisLabelDy={-8}
-        domainPadding={{ x: 20 }}
-        yAxisLabel="Deaths (in Hundreds)"
-        yAxisValues={[0, 7, 14, 21, 28, 34]}
-      />
-
-      <header className="header">
-        Ontario COVID Deaths Jan 2020 - Aug 2021 80 vs Not 80
-      </header>
-      <BarGraph
-        data={covidDeaths80VNot80}
-        xAxisLabel="Ages"
-        yAxisLabel="Deaths"
-        xAxisLabelDy={-35}
-        domainPadding={{ x: 100 }}
-        theme={VictoryTheme.material}
-        yAxisValues={[0, 1500, 3000, 4500, 6000]}
-      />
-
       <header className="header">
         Canadian Deaths 1971 - 2020
       </header>
@@ -109,6 +111,58 @@ export const App = () => {
           xAxisLabel="Realtive Deaths to Population (%)"
         />
       )}
+
+      <header className="header">
+        Ontario COVID Deaths Percents Jan 2020 - Aug 2021
+      </header>
+      <BarGraph
+        type="percent"
+        data={ontarioCovidData}
+        xAxisLabel="Ages"
+        xAxisLabelDy={-8}
+        domainPadding={{ x: 20 }}
+        yAxisLabel="Death Rate Realtive to Cases (%)"
+        yAxisValues={[0, 10, 20, 30]}
+      />
+
+      <header className="header">
+        Ontario COVID Deaths Percents Jan 2020 - Aug 2021 80 vs Not 80
+      </header>
+      <BarGraph
+        type="percent"
+        data={ontarioCovidData80VNot80}
+        xAxisLabel="Ages"
+        xAxisLabelDy={-20}
+        domainPadding={{ x: 80 }}
+        theme={VictoryTheme.material}
+        yAxisLabel="Death Rate Realtive to Cases (%)"
+        yAxisValues={[0, 10, 20, 30]}
+      />
+
+      <header className="header">
+        Ontario COVID Deaths Jan 2020 - Aug 2021
+      </header>
+      <BarGraph
+        data={covidDeaths}
+        xAxisLabel="Ages"
+        xAxisLabelDy={-8}
+        domainPadding={{ x: 20 }}
+        yAxisLabel="Deaths (in Hundreds)"
+        yAxisValues={[0, 7, 14, 21, 28, 34]}
+      />
+
+      <header className="header">
+        Ontario COVID Deaths Jan 2020 - Aug 2021 80 vs Not 80
+      </header>
+      <BarGraph
+        data={covidDeaths80VNot80}
+        xAxisLabel="Ages"
+        yAxisLabel="Deaths"
+        xAxisLabelDy={-35}
+        domainPadding={{ x: 100 }}
+        theme={VictoryTheme.material}
+        yAxisValues={[0, 1500, 3000, 4500, 6000]}
+      />
     </div>
   );
 };
