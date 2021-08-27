@@ -65,7 +65,6 @@ const ontarioCovidData80VNot80 = [
 ];
 
 export const App = () => {
-  console.log(ontarioCovidData80VNot80)
   const { data: deaths } = useAsync({ promiseFn: getData, csv: 'deaths' });
   const { data: population } = useAsync({ promiseFn: getData, csv: 'population' });
 
