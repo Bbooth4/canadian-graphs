@@ -21,17 +21,20 @@ const getData = async ({ csv }) => {
 
 // source
 // https://covid-19.ontario.ca/data
+// https://covid-19.ontario.ca/data/case-numbers-and-spread
 // Aug 17, 2021
+const totalDeaths = 5 + 28 + 62 + 149 + 468 + 1105 + 1941 + 3191 + 2478;
+
 const covidDeaths = [
-  { x: '< 20', y: 5/100 },
-  { x: '20-29', y: 28/100 },
-  { x: '30-39', y: 62/100 },
-  { x: '40-49', y: 149/100 },
-  { x: '50-59', y: 468/100 },
-  { x: '60-69', y: 1105/100 },
-  { x: '70-79', y: 1941/100 },
-  { x: '80-89', y: 3191/100 },
-  { x: '90+', y: 2478/100 }
+  { x: '< 20', y: 5/totalDeaths * 100 },
+  { x: '20-29', y: 28/totalDeaths * 100 },
+  { x: '30-39', y: 62/totalDeaths * 100 },
+  { x: '40-49', y: 149/totalDeaths * 100 },
+  { x: '50-59', y: 468/totalDeaths * 100 },
+  { x: '60-69', y: 1105/totalDeaths * 100 },
+  { x: '70-79', y: 1941/totalDeaths * 100 },
+  { x: '80-89', y: 3191/totalDeaths * 100 },
+  { x: '90+', y: 2478/totalDeaths * 100 }
 ];
 
 const covidDeaths80VNot80 = [
@@ -125,7 +128,7 @@ export const App = () => {
       />
 
       <header className="header">
-        Ontario COVID Deaths Percents Jan 2020 - Aug 2021 80 vs Not 80
+        Ontario COVID Deaths Realtive to Cases Jan 2020 - Aug 2021 80 vs Not 80
       </header>
       <BarGraph
         type="percent"
@@ -146,8 +149,8 @@ export const App = () => {
         xAxisLabel="Ages"
         xAxisLabelDy={-8}
         domainPadding={{ x: 20 }}
-        yAxisLabel="Deaths (in Hundreds)"
-        yAxisValues={[0, 7, 14, 21, 28, 34]}
+        yAxisLabel="Deaths (%)"
+        yAxisValues={[0, 10, 20, 30, 40]}
       />
 
       <header className="header">
